@@ -1,6 +1,8 @@
+var ctrl = require("./controller/index")
+
 function route(app) {
   app.route("/signup")
-    .post(sendOK)
+    .post(ctrl.SignUp)
 
   app.route("/login")
     .post(sendOK)
