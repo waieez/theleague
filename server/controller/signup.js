@@ -2,10 +2,6 @@ var User = require("../model/User")
 module.exports = SignUp
 
 function SignUp(req, res) {
-  // TODO:
-  // do this async
-  // init/connect to DB
-  // parse body for username/password/profile
   var username = req.body.username
   var password = req.body.password
   var profile = req.body.profile

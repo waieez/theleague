@@ -5,7 +5,7 @@ function route(app) {
     .post(ctrl.SignUp)
 
   app.route("/login")
-    .post(sendErr)
+    .post(ctrl.Login)
 
   app.route("/")
     .get(sendOK) 

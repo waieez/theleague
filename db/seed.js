@@ -1,5 +1,7 @@
 r = require('rethinkdb');
+var _ = require('./index')
 var config = require("./config")
+var testData = require("./testdata")
 var connection = null;
 
 // still figuring this out... looks messy but i'll leave it for now
@@ -16,15 +18,26 @@ r.connect( {host: config.HOST, port: config.PORT}, function(err, conn) {
         log(err, result)
 
         // create users table
-        r.db(config.DB).tableCreate(config.USERS)
+        _.DB().tableCreate(config.USERS)
         .run(connection, function(err, result) {
             log(err, result)
             // create index on userName. ugh I should've used postgres
-            r.db(config.DB).table(config.USERS).indexCreate("username")
+            _.Users().indexCreate("username")
             .run(conn, function (err, result) {
               log(err, result)
+
+              // insert users
+              var insertConfig = {durability: "hard", returnChanges: false, conflict: "error"}
+              console.log("debug: testData are:", testData)
+              _.Users().insert(testData.users, insertConfig)
+              .run(conn, function (err, result) {
+                console.log("debug: Inserting test data...", testData)
+                log(err, result)
+              })
+
             })
-            // insert users
+
+            
         })
 
         // create other tables

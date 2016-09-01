@@ -5,6 +5,7 @@ var connection = null;
 module.exports = {
   connect: connect,
   isConnected: isConnected,
+  DB, DB,
   Users: Users,
 }
 
@@ -28,6 +29,10 @@ function isConnected(conn, cb) {
   return true
 }
 
+function DB() {
+  return r.db(config.DB)
+}
+
 function Users() {
-  return r.db(config.DB).table(config.USERS)
+  return DB().table(config.USERS)
 }

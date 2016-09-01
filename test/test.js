@@ -10,9 +10,11 @@ var util = require('../util/random')
 describe("Login", function (done) {
 
   it("Should handle '/login'", function (done) {
+
+    var user = {username: "test_user", password: "test_pass"}
     request(app)
       .post("/login")
-      // send data
+      .send(user)
       .expect(200)
       .end(function (err, res) {
         if (err) {

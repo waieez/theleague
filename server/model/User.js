@@ -2,24 +2,25 @@ var DB = require("../../db/index")
 var config = require("../../db/config")
 
 module.exports = {
-  createUser: createUser
+  createUser: createUser,
+  getUser: getUser
 }
 
 
 function createUser(username, password, profile, cb) {
-  console.log("debug: creating user")
+  console.log("debug: creating user", username)
   DB.connect(function (conn) {
     if (!DB.isConnected(conn, cb)) {
       return
     }
-    getUser(conn, username, function (err, result) {
+    getUser(username, function (err, result) {
       if (err) {
         console.log("warn: failed getting users from DB")
         cb(err)
         return
       }
-      if (result) {
-        console.log("debug: user exists for username: ", username)
+      if (result.length) {
+        console.log("debug: user exists for username: ", username, result)
         cb({error: "User already exists!"}, null)
         return
       }
@@ -29,37 +30,47 @@ function createUser(username, password, profile, cb) {
   })
 }
 
-function getUser(conn, username, cb) {
-  if (!DB.isConnected(conn, cb)) {
+function getUser(username, cb) {
+  console.log("debug: fetching user ", username)
+  DB.connect(function (conn) {
+    if (!DB.isConnected(conn, cb)) {
       return
-  }
-  DB.Users()
-    .getAll(username, {index: "username"})
-    .run(conn, function (err, cursor) {
-      if (err) {
-        cb(err, null)
-        return
-      }
-      cursor.toArray(function (result) {
-        console.log("debug: results are: ", result)
-        cb(null, result)
+    }
+    DB.Users()
+     .filter({username: username})
+      .run(conn, function (err, cursor) {
+        if (err) {
+          cb(err, null)
+          return
+        }
+        cursor.toArray(function (err, result) {
+          if (err) {
+            cb(err, null)
+            return
+          }
+          cb(null, result)
+        })
       })
-    })
+  })
 }
 
 function insertUser(conn, username, password, cb) {
-  if (!DB.isConnected(conn, cb)) {
+  console.log("debug: inserting user ", username)
+  DB.connect(function (conn) {
+    if (!DB.isConnected(conn, cb)) {
       return
-  }
-  DB.Users()
-    .insert({
-      username: username,
-      password: password
-    })
-    .run(conn, function (err, result) {
-      console.log("debug: inserting user", err, result)
-      cb(err, result)
-    })
+    }
+    DB.Users()
+      .insert({
+        username: username,
+        password: password
+      })
+      .run(conn, function (err, result) {
+        console.log("debug: done inserting user", err, result)
+        cb(err, result)
+      })  
+  })
+  
 }
 
 function hashPassword(password) {
