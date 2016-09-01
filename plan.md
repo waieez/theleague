@@ -43,6 +43,9 @@ Even if past matches have changed their profile and now match the user's prefere
 This also neatly handles the issue where a user's preferences might change.
 Depending on how this approach is executed, it may be relatively performant.
 
+Realized I made an assumption about users so I'll assert that here.
+Users are never deleted. we can perhaps disable them via some disabled flag this is a difficult question but worth discussing
+
 Challenges:
 
   Religion and location will be harder to handle efficiently. Shall tackle those last.

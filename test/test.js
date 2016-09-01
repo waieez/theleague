@@ -3,6 +3,7 @@ var expect = chai.expect;
 var request = require('supertest');
 
 var app = require('../server/app');
+var util = require('../util/random')
 
 // TODO: some setup
 
@@ -25,9 +26,12 @@ describe("Login", function (done) {
 describe("Signup", function () {
 
   it("Should handle '/signup'", function (done) {
+    // shitty tests
+    var user = util.createRandomUser()
     request(app)
       .post("/signup")
       // send data
+      .send(user)
       .expect(200)
       .end(function (err, res) {
         if (err) {
