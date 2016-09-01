@@ -1,0 +1,29 @@
+{
+  "name": "theleague",
+  "version": "1.0.0",
+  "description": "la liga",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test",
+    "start": "node ./server/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waieez/theleague.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waieez/theleague/issues"
+  },
+  "homepage": "https://github.com/waieez/theleague#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
+    "es6-promise": "^3.2.1",
+    "express": "^4.14.0",
+    "isomorphic-fetch": "^2.2.1",
+    "mocha": "^3.0.2",
+    "supertest": "^2.0.0"
+  }
+}
