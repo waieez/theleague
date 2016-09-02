@@ -9,6 +9,7 @@ function SignUp(req, res) {
     res.status(400).send({error: "Bad request"})
     return
   }
+  profile = User.Profile(profile)
   User.createUser(username, password, profile, function (err, result) {
     if (err) {
       res.status(500).send({error: "Sorry, please try again later"})

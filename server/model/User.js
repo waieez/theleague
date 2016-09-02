@@ -11,7 +11,19 @@ var ProfileSchema = {
   "location": "lat/long"
 }
 
+var PreferenceSchema = {
+  "gender": "string",
+  "minAge": "number",
+  "maxAge": "number",
+  "minHeight": "number",
+  "maxHeight": "number",
+  "location": "string"
+}
+
 module.exports = {
+  Profile: Profile,
+  Preference: Preference,
+
   createUser: createUser,
   getUser: getUser,
   updateUser: updateUser,
@@ -107,6 +119,26 @@ function hashPassword(password) {
   return password
 }
 
+function Profile(data) {
+  var profile = {}
+  for (var key in data) {
+    if (ProfileSchema[key]) {
+      profile[key] = data[key]
+    }
+  }
+  return profile
+}
+
+function Preference(data) {
+  var preference = {}
+  for (var key in data) {
+    if (PreferenceSchema[key]) {
+      preference[key] = data[key]
+    }
+  }
+  return preference
+}
+
 function validateProfile(profile) {
   for (var key in ProfileSchema) {
     // for now a simple check to see if it exists
@@ -117,6 +149,12 @@ function validateProfile(profile) {
   return true
 }
 
-function validatePreference() {
-  return false
+function validatePreference(preference) {
+  for (var key in PreferenceSchema) {
+    // for now a simple check to see if it exists
+    if (!preference[key]) {
+      return false
+    }
+  }
+  return true
 }

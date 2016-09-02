@@ -3,7 +3,7 @@ var uuid = require("node-uuid")
 module.exports = {Auth: Auth, CreateSession: CreateSession}
 
 function Auth(req, res, next) {
-  console.log("debug: checking auth", req.session)
+  console.log("debug: checking auth")
   if (!req.user) {
     LoadSession(req)
   }

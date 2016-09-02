@@ -10,6 +10,9 @@ function route(app) {
   app.route("/profile")
     .put(ctrl.Auth, ctrl.Profile)
 
+  app.route("/preference")
+    .put(ctrl.Auth, ctrl.Preference)
+
   app.route("/")
     .get(ctrl.Auth, sendOK)
   return app

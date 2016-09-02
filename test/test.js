@@ -139,9 +139,57 @@ describe("Profile", function () {
 
 })
 
-xdescribe("Preferences", function () {
-  xit("Auth users should be able to edit their preferences", function (done) {
+describe("Preferences", function () {
+  it ("Auth users should be able to edit their preferences", function (done) {
+    var user = {username: "test_user", password: "test_pass"}
+    var update = {username: "test_user", gender: "M", minAge: 20, maxAge: 40, minHeight: 5, maxHeight: 6, location: "San Francisco"}
+    request(app)
+      .post("/login")
+      .send(user)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        var cookieVal = res.header['set-cookie']
+        request(app)
+          .put("/preference")
+          .send(update)
+          .set("Cookie", cookieVal)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            done()
+          })
+      })
+  })
 
+  it ("Users should not be able to edit another user's preferences", function (done) {
+    var user = {username: "test_user1", password: "test_pass"}
+    var update = {username: "test_user", gender: "M", minAge: 20, maxAge: 40, minHeight: 5, maxHeight: 6, location: "San Francisco"}
+    request(app)
+      .post("/login")
+      .send(user)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        var cookieVal = res.header['set-cookie']
+        request(app)
+          .put("/preference")
+          .send(update)
+          .set("Cookie", cookieVal)
+          .expect(403)
+          .end(function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            done()
+          })
+      })
   })
 })
 
