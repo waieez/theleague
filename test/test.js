@@ -196,7 +196,6 @@ describe("Preferences", function () {
 describe("Matches", function () {
   it ("Auth users should be able to get a list of their matches", function (done) {
     var user = {username: "test_user", password: "test_pass"}
-    //var update = {username: "test_user", gender: "M", minAge: 20, maxAge: 40, minHeight: 5, maxHeight: 6, location: "San Francisco"}
     // ughh...
     // login
     request(app)
