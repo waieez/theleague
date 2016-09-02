@@ -7,6 +7,9 @@ function route(app) {
   app.route("/login")
     .post(ctrl.Login)
 
+  app.route("/profile")
+    .put(ctrl.Auth, ctrl.Profile)
+
   app.route("/")
     .get(ctrl.Auth, sendOK)
   return app

@@ -3,7 +3,7 @@ var _ = require('./index')
 var config = require("./config")
 var testData = require("./testdata")
 var connection = null;
-
+var insertConfig = {durability: "hard", returnChanges: false, conflict: "error"}
 // still figuring this out... looks messy but i'll leave it for now
 r.connect( {host: config.HOST, port: config.PORT}, function(err, conn) {
     if (err) throw err;
@@ -27,17 +27,15 @@ r.connect( {host: config.HOST, port: config.PORT}, function(err, conn) {
               log(err, result)
 
               // insert users
-              var insertConfig = {durability: "hard", returnChanges: false, conflict: "error"}
+              
               console.log("debug: testData are:", testData)
               _.Users().insert(testData.users, insertConfig)
               .run(conn, function (err, result) {
-                console.log("debug: Inserting test data...", testData)
+                console.log("debug: Inserting test data...", testData.users)
                 log(err, result)
               })
 
             })
-
-            
         })
 
         // create other tables

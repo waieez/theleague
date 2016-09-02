@@ -84,10 +84,59 @@ describe("Auth", function () {
 
 })
 
-xdescribe("Profile", function () {
-  xit("Auth users should be able to edit their profiles", function (done) {
-    
+describe("Profile", function () {
+  it ("Auth users should be able to edit a profile", function (done) {
+    var user = {username: "test_user", password: "test_pass"}
+    var update = {username: "test_user", location: "Los Angeles"}
+    request(app)
+      .post("/login")
+      .send(user)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        var cookieVal = res.header['set-cookie']
+        request(app)
+          .put("/profile")
+          .send(update)
+          .set("Cookie", cookieVal)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            done()
+          })
+      })
   })
+
+  it ("Users should not be able to edit another user's profile", function (done) {
+    var user = {username: "test_user1", password: "test_pass"}
+    var update = {username: "test_user", location: "Los Angeles"}
+    request(app)
+      .post("/login")
+      .send(user)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        var cookieVal = res.header['set-cookie']
+        request(app)
+          .put("/profile")
+          .send(update)
+          .set("Cookie", cookieVal)
+          .expect(403)
+          .end(function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            done()
+          })
+      })
+  })
+
 })
 
 xdescribe("Preferences", function () {

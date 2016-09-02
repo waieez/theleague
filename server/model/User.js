@@ -1,9 +1,22 @@
 var DB = require("../../db/index")
 var config = require("../../db/config")
 
+// TODO: use an actual schema and acutually do validation
+var ProfileSchema = {
+  "name": "string",
+  "gender": "string",
+  "age": "number",
+  "height": "number",
+  "religion": "string",
+  "location": "lat/long"
+}
+
 module.exports = {
   createUser: createUser,
-  getUser: getUser
+  getUser: getUser,
+  updateUser: updateUser,
+  validateProfile: validateProfile,
+  validatePreference, validatePreference
 }
 
 
@@ -25,7 +38,7 @@ function createUser(username, password, profile, cb) {
         return
       }
       var hash = hashPassword(password)
-      insertUser(conn, username, hash, cb)
+      insertUser(username, hash, cb)
     })
   })
 }
@@ -54,7 +67,7 @@ function getUser(username, cb) {
   })
 }
 
-function insertUser(conn, username, password, cb) {
+function insertUser(username, password, cb) {
   console.log("debug: inserting user ", username)
   DB.connect(function (conn) {
     if (!DB.isConnected(conn, cb)) {
@@ -69,12 +82,41 @@ function insertUser(conn, username, password, cb) {
         console.log("debug: done inserting user", err, result)
         cb(err, result)
       })  
-  })
-  
+  }) 
+}
+
+function updateUser(id, data, cb) {
+  console.log("debug: updating user ", id)
+  DB.connect(function (conn) {
+    if (!DB.isConnected(conn, cb)) {
+      return
+    }
+    DB.Users()
+      .get(id)
+      .update(data)
+      .run(conn, function (err, result) {
+        console.log("debug: done updating user", err, result)
+        cb(err, result)
+      })  
+  }) 
 }
 
 function hashPassword(password) {
   // todo: hash it
   console.log("debug: hashing password")
   return password
+}
+
+function validateProfile(profile) {
+  for (var key in ProfileSchema) {
+    // for now a simple check to see if it exists
+    if (!profile[key]) {
+      return false
+    }
+  }
+  return true
+}
+
+function validatePreference() {
+  return false
 }

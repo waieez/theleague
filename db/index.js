@@ -7,6 +7,7 @@ module.exports = {
   isConnected: isConnected,
   DB, DB,
   Users: Users,
+  Profiles, Profiles
 }
 
 function connect (cb) {
@@ -35,4 +36,8 @@ function DB() {
 
 function Users() {
   return DB().table(config.USERS)
+}
+
+function Profiles() {
+  return DB().table(config.PROFILES)
 }
