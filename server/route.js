@@ -8,7 +8,7 @@ function route(app) {
     .post(ctrl.Login)
 
   app.route("/")
-    .get(sendOK) 
+    .get(ctrl.Auth, sendOK)
   return app
 }
 

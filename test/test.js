@@ -16,6 +16,7 @@ describe("Login", function (done) {
       .post("/login")
       .send(user)
       .expect(200)
+      //.expect("set-cookie", "whatever")
       .end(function (err, res) {
         if (err) {
           return done(err)
@@ -44,19 +45,48 @@ describe("Signup", function () {
   })
 })
 
-xdescribe("Auth", function () {
-  xit("Should reject users with invalid sessions", function (done) {
-
+describe("Auth", function () {
+  it("Should reject users with invalid sessions", function (done) {
+    request(app)
+      .get("/")
+      .set('Cookie', "connect.sid=dummycookie")
+      .expect(403)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        done()
+      })
   })
-  xit("Should create a session for a auth user", function (done) {
-
+  it("Should accept users with valid sessions", function (done) {
+    var user = {username: "test_user", password: "test_pass"}
+    request(app)
+      .post("/login")
+      .send(user)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        var cookieVal = res.header['set-cookie']
+        request(app)
+          .get("/")
+          .set("Cookie", cookieVal)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            done()
+          })
+      })
   })
 
 })
 
 xdescribe("Profile", function () {
   xit("Auth users should be able to edit their profiles", function (done) {
-
+    
   })
 })
 
