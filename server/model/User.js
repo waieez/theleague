@@ -26,6 +26,7 @@ module.exports = {
 
   createUser: createUser,
   getUser: getUser,
+  getMatches: getMatches,
   updateUser: updateUser,
   validateProfile: validateProfile,
   validatePreference, validatePreference
@@ -113,8 +114,67 @@ function updateUser(id, data, cb) {
   }) 
 }
 
+function getMatches(id, cb) {
+  console.log("debug: fetching matches for user", id)
+  DB.connect(function (conn) {
+    if (!DB.isConnected(conn, cb)) {
+      return
+    }
+    DB.Users()
+      .get(id)
+      .run(conn, function (err, result) {
+        if (err) {
+          console.log("warn: failed to get a user's preferences")
+          cb(err, null)
+          return
+        }
+        // ugh... can't think right now. will refactor
+        var p = result.preference
+        DB.Users()
+          .filter(function (user) {
+            // T _ T
+            return filterByPreferences(p, user)
+          })
+          .getField("profile")
+          .run(conn, function (err, cursor) {
+            if (err) {
+              console.log("debug: failed to get results", err)
+              cb(err, null)
+              return
+            }
+            cursor.toArray(function (err, result) {
+              if (err) {
+                console.log("debug: failed to coerce cursor into array", err)
+                cb(err, null)
+                return
+              }
+              console.log("debug: returning matches for user", id, result)
+              cb(null, result)
+            })
+          })
+      })
+  })
+}
+
+function filterByPreferences(p, user) {
+  //gender
+  return (user("profile")("gender").eq(p.gender))
+  //age >= minAge
+  .and(user("profile")("age").eq(p.minAge).or(user("profile")("age").gt(p.minAge)))
+  //TODO: location within distance
+  .and(user("profile")("location").eq(p.location))
+  //age <= maxAge
+  .and(user("profile")("age").eq(p.maxAge).or(user("profile")("age").lt(p.maxAge)))
+  //height >= minHeight
+  .and(user("profile")("height").eq(p.minHeight).or(user("profile")("height").gt(p.minHeight)))
+  //height <= maxHeight
+  .and(user("profile")("height").eq(p.maxHeight).or(user("profile")("height").lt(p.maxHeight)))
+  
+
+}
+
 function hashPassword(password) {
-  // todo: hash it
+  // todo: actually hash it with something like bcrypt
   console.log("debug: hashing password")
   return password
 }

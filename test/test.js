@@ -141,8 +141,8 @@ describe("Profile", function () {
 
 describe("Preferences", function () {
   it ("Auth users should be able to edit their preferences", function (done) {
-    var user = {username: "test_user", password: "test_pass"}
-    var update = {username: "test_user", gender: "M", minAge: 20, maxAge: 40, minHeight: 5, maxHeight: 6, location: "San Francisco"}
+    var user = {username: "test_user1", password: "test_pass"}
+    var update = {username: "test_user1", gender: "M", minAge: 20, maxAge: 40, minHeight: 5, maxHeight: 6, location: "San Francisco"}
     request(app)
       .post("/login")
       .send(user)
@@ -193,9 +193,36 @@ describe("Preferences", function () {
   })
 })
 
-xdescribe("Matches", function () {
-  xit("Auth users should be able to get a set of matches based on their preferences", function (done) {
+describe("Matches", function () {
+  it ("Auth users should be able to get a list of their matches", function (done) {
+    var user = {username: "test_user", password: "test_pass"}
+    //var update = {username: "test_user", gender: "M", minAge: 20, maxAge: 40, minHeight: 5, maxHeight: 6, location: "San Francisco"}
+    // ughh...
+    // login
+    request(app)
+      .post("/login")
+      .send(user)
+      .expect(200)
+      .end(function (err, res) {
+        if (err) {
+          return done(err)
+        }
+        var cookieVal = res.header['set-cookie']
 
+        // get matches
+        request(app)
+          .get("/match")
+          .send({username: user.username})
+          .set("Cookie", cookieVal)
+          .expect(200)
+          .end(function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            expect(res.body.data).not.empty
+            done()
+          })
+      })
   })
 })
 

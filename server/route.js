@@ -13,6 +13,9 @@ function route(app) {
   app.route("/preference")
     .put(ctrl.Auth, ctrl.Preference)
 
+  app.route("/match")
+    .get(ctrl.Auth, ctrl.Match)
+
   app.route("/")
     .get(ctrl.Auth, sendOK)
   return app

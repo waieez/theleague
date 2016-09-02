@@ -5,9 +5,17 @@ var users = [
     profile: {
       name: "test_user",
       gender: "M",
-      age: "20",
+      age: 30,
       height: 5.5,
       religion: "whatever",
+      location: "San Francisco"
+    },
+    preference: {
+      gender: "F",
+      minAge: 20,
+      maxAge: 30,
+      minHeight: 5,
+      maxHeight: 6,
       location: "San Francisco"
     }
   },
@@ -17,7 +25,7 @@ var users = [
     profile: {
       name: "test_user1",
       gender: "M",
-      age: "20",
+      age: 25,
       height: 6.0,
       religion: "whatever",
       location: "San Francisco"
@@ -29,10 +37,10 @@ var users = [
     profile: {
       name: "test_user2",
       gender: "F",
-      age: "20",
+      age: 25,
       height: 5.5,
       religion: "whatever",
-      location: "San Francisco"
+      location: "Los Angeles"
     }
   },
   {
@@ -41,7 +49,7 @@ var users = [
     profile: {
       name: "test_user3",
       gender: "F",
-      age: "20",
+      age: 30,
       height: 6.0,
       religion: "whatever",
       location: "San Francisco"
