@@ -2,6 +2,7 @@ var User = require("../model/User")
 
 module.exports = Preference
 
+// Preference is the handler for the preference route
 function Preference(req, res) {
   var id = req.user.id
   var preference = User.Preference(req.body)

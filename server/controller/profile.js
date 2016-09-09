@@ -2,6 +2,7 @@ var User = require("../model/User")
 
 module.exports = Profile
 
+// Profile is the handler for the profile route
 function Profile(req, res) {
   var id = req.user.id
   // ugh..

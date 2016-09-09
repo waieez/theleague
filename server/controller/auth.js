@@ -6,6 +6,7 @@ module.exports = {
   CreateSession: CreateSession,
 }
 
+// Authenticate checks if the user is logged in via express-sessions stored in redis
 function Authenticate(req, res, next) {
   console.log("debug: checking auth")
   if (!req.user) {
@@ -18,6 +19,7 @@ function Authenticate(req, res, next) {
   next()
 };
 
+// Authorize checks if the user has privledges to acces the request resource via express-sessions stored in redis
 function Authorize(req, res, next) {
   var username = req.body.username
   // assume can't change username
@@ -27,6 +29,8 @@ function Authorize(req, res, next) {
   }
   next()
 }
+
+// Helper functions for creating/loading a session
 
 // don't like the contract here, but whatever..
 function CreateSession(req, user) {

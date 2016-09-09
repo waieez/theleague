@@ -2,6 +2,7 @@ var User = require("../model/User")
 var auth = require("./auth")
 module.exports = Login
 
+// Login is the handler for the /login route
 function Login(req, res) {
   var username = req.body.username
   var password = req.body.password

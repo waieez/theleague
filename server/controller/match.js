@@ -2,6 +2,7 @@ var User = require("../model/User")
 
 module.exports = Match
 
+// Match is the handler for the /match route
 function Match(req, res) {
   var id = req.user.id
   User.getMatches(id, function (err, result) {

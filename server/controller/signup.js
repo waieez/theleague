@@ -1,6 +1,7 @@
 var User = require("../model/User")
 module.exports = SignUp
 
+// Signup is the handler for the signup route
 function SignUp(req, res) {
   var username = req.body.username
   var password = req.body.password

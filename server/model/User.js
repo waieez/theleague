@@ -1,6 +1,7 @@
 var DB = require("../../db/index")
 var config = require("../../db/config")
 
+// Schema
 // TODO: use an actual schema and acutually do validation
 var ProfileSchema = {
   "name": "string",
@@ -20,6 +21,7 @@ var PreferenceSchema = {
   "location": "string"
 }
 
+// User model contains methods for interacting with a User
 module.exports = {
   Profile: Profile,
   Preference: Preference,
@@ -32,7 +34,7 @@ module.exports = {
   validatePreference, validatePreference
 }
 
-
+// createUser creates a user in the db if it doesn't already exist
 function createUser(username, password, profile, cb) {
   console.log("debug: creating user", username)
   DB.connect(function (conn) {
@@ -56,6 +58,7 @@ function createUser(username, password, profile, cb) {
   })
 }
 
+// getUser gets a user from the db bu the username
 function getUser(username, cb) {
   console.log("debug: fetching user ", username)
   DB.connect(function (conn) {
@@ -80,6 +83,7 @@ function getUser(username, cb) {
   })
 }
 
+// insertUser inserts a user into the db
 function insertUser(username, password, cb) {
   console.log("debug: inserting user ", username)
   DB.connect(function (conn) {
@@ -98,6 +102,7 @@ function insertUser(username, password, cb) {
   }) 
 }
 
+// updateUser updates a user record in the db
 function updateUser(id, data, cb) {
   console.log("debug: updating user ", id)
   DB.connect(function (conn) {
@@ -114,6 +119,7 @@ function updateUser(id, data, cb) {
   }) 
 }
 
+// getMatches gets a set of users that match a given user's preferences
 function getMatches(id, cb) {
   console.log("debug: fetching matches for user", id)
   DB.connect(function (conn) {
@@ -173,12 +179,14 @@ function filterByPreferences(p, user) {
 
 }
 
+// hashPassword hashes a password
 function hashPassword(password) {
   // todo: actually hash it with something like bcrypt
   console.log("debug: hashing password")
   return password
 }
 
+// Profile creates a Profile 'struct' based on the data provided
 function Profile(data) {
   var profile = {}
   for (var key in data) {
@@ -189,6 +197,7 @@ function Profile(data) {
   return profile
 }
 
+// Preference creates a Preference 'struct' based on the data provided
 function Preference(data) {
   var preference = {}
   for (var key in data) {
@@ -199,6 +208,7 @@ function Preference(data) {
   return preference
 }
 
+// validateProfile validates a users profile
 function validateProfile(profile) {
   for (var key in ProfileSchema) {
     // for now a simple check to see if it exists
@@ -209,6 +219,7 @@ function validateProfile(profile) {
   return true
 }
 
+// validatePreference validates a users preference
 function validatePreference(preference) {
   for (var key in PreferenceSchema) {
     // for now a simple check to see if it exists
