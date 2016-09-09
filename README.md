@@ -12,23 +12,23 @@
 POST /login
 ```
 {
-    username: [string],
-    password: [string]
+    "username": [string],
+    "password": [string]
 }
 ```
 
 POST /signup
 ```
 {
-    username: [string],
-    password: [string],
-    profile: {
-        name: [string],
-        gender: [string], // M or F
-        age: [int],
-        height: [float] // in feet,
-        religion: [string],
-        location: [string] // city
+    "username": [string],
+    "password": [string],
+    "profile": {
+        "name": [string],
+        "gender": [string], // M or F
+        "age": [int],
+        "height": [float] // in feet,
+        "religion": [string],
+        "location": [string] // city
     }
 }
 ```
@@ -36,15 +36,15 @@ POST /signup
 PUT /profile
 ```
 {
-    username: [string], // username of the user being updated
+    "username": [string], // username of the user being updated
 
     // any of the following fields
-    name: [string],
-    gender: [string], // M or F
-    age: [int],
-    height: [float] // in feet,
-    religion: [string],
-    location: [string] // city
+    "name": [string],
+    "gender": [string], // M or F
+    "age": [int],
+    "height": [float] // in feet,
+    "religion": [string],
+    "location": [string] // city
 }
 ```
 
@@ -54,21 +54,21 @@ PUT /preferences
 // therefore all preferences must be sent
 // TODO: handle this differently
 {   
-    username: [string], // username of the user being updated
-    gender: [string], // preferred gender M or F
-    minAge: [int],
-    maxAge: [int],
-    minHeight: [int],
-    maxHeight: [int],
-    religion: [string],
-    location: [string] // city
+    "username": [string], // username of the user being updated
+    "gender": [string], // preferred gender M or F
+    "minAge": [int],
+    "maxAge": [int],
+    "minHeight": [int],
+    "maxHeight": [int],
+    "religion": [string],
+    "location": [string] // city
 }
 ```
 
 GET /matches
 ```
 {
-    username: [string]
+    "username": [string]
 }
 ```
 
