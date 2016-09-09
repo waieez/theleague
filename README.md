@@ -6,6 +6,10 @@
 3. run ./setup.sh
 4. cd db && run ./setup.sh
 5. npm test
+6. cd ../ && ./build.sh
+7. ./run.sh
+8. import postman collection
+9. profit
 
 # API:
 
