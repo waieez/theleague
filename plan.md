@@ -1,41 +1,5 @@
 Ideas:
 
-API
-
-POST /login
-- Registered/Authenticated users should recieve a session token
-
-POST /signup
-- User should send a payload with the user's desired username/password as well as personal information
-  - Name,
-  - Gender,
-  - Age,
-  - Height,
-  - Religion,
-  - Location
-
-  - perhaps create null/default preferences initially
-
-PUT /profile/:id
-  - Auth users should be able to edit their profile details
-
-PUT /preferences/:id
-  - Auth users should be able to edit their preferences
-  - Gender,
-  - Age range,
-  - Height range,
-  - Religions?
-  - Distance
-
-GET /matches/[:id???]
-  - looks up a user's preferences (optionally send preference) and returns 0~5 people that match a user's preferences
-
-Stretch
-
-POST /like/:id
-
-POST /pass/:id
-
 Initial thoughts:
 
 Each user has a pointer to the last id they've seen (voted on)
@@ -55,25 +19,3 @@ Challenges:
 
 Some questions to think about:
   Expected load? DAU? RPS? Strong or Eventual Consistency ok?
-
-
-
-Requirements:
-
-The server should have 3 routes:
-
-1. Signup ­ Create a new user with user preferences, username & password.
-
-2. Login ­ Create a user session.
-
-3. Get a batch of 5 potential people for the user to review that s/he may reject or heart/like
-
-(make sure you take into account the current user and the potential people preferences)
-
-­ array of 5 people with their basic info.
-
-Bonus:
-
-1. Like a person
-
-2. Reject a person

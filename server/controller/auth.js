@@ -1,5 +1,3 @@
-var uuid = require("node-uuid")
-
 module.exports = {
   Authenticate: Authenticate,
   Authorize: Authorize,
