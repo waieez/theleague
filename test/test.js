@@ -208,9 +208,9 @@ describe("Matches", function () {
 
         // get matches
         request(app)
-          .get("/match")
-          .send({username: user.username})
+          .post("/match")
           .set("Cookie", cookieVal)
+          .send({username: user.username})
           .expect(200)
           .end(function (err, res) {
             if (err) {

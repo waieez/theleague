@@ -61,6 +61,11 @@ function createUser(username, password, profile, cb) {
 // getUser gets a user from the db bu the username
 function getUser(username, cb) {
   console.log("debug: fetching user ", username)
+  if (!username) {
+    console.log("debug: username not provided")
+    cb({error: "must provide a username"})
+    return
+  }
   DB.connect(function (conn) {
     if (!DB.isConnected(conn, cb)) {
       return

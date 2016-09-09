@@ -10,7 +10,7 @@ function Authenticate(req, res, next) {
   if (!req.user) {
     LoadSession(req)
   }
-  if (!req.user || !req.session || !req.session.user) {
+  if (!req.user || !req.session || req.session && !req.session.user) {
     res.status(403).send({error: "Please log in"})
     return
   }
@@ -37,7 +37,7 @@ function CreateSession(req, user) {
 }
 
 function LoadSession(req) {
-  if (!req.session.user) {
+  if (!req || !req.session || !req.session.user) {
     return
   }
   req.session.user = req.session.user

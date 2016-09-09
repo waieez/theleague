@@ -14,7 +14,7 @@ function route(app) {
     .put(ctrl.Authenticate, ctrl.Authorize, ctrl.Preference)
 
   app.route("/match")
-    .get(ctrl.Authenticate, ctrl.Authorize, ctrl.Match)
+    .post(ctrl.Authenticate, ctrl.Authorize, ctrl.Match)
 
   app.route("/")
     .get(ctrl.Authenticate, sendOK)
