@@ -25,8 +25,10 @@ function Login(req, res) {
   })
 }
 
+// authenticate checks if the provided password matches the hashed password. 
 function authenticate(password, hash) {
   console.log("debug: authenticating user...", password == hash)
+  // TODO: use bcrypt to hash passwords and check for authentication
   return password == hash
 }
 

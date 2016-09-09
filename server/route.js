@@ -8,16 +8,16 @@ function route(app) {
     .post(ctrl.Login)
 
   app.route("/profile")
-    .put(ctrl.Auth, ctrl.Profile)
+    .put(ctrl.Authenticate, ctrl.Authorize, ctrl.Profile)
 
   app.route("/preference")
-    .put(ctrl.Auth, ctrl.Preference)
+    .put(ctrl.Authenticate, ctrl.Authorize, ctrl.Preference)
 
   app.route("/match")
-    .get(ctrl.Auth, ctrl.Match)
+    .get(ctrl.Authenticate, ctrl.Authorize, ctrl.Match)
 
   app.route("/")
-    .get(ctrl.Auth, sendOK)
+    .get(ctrl.Authenticate, sendOK)
   return app
 }
 

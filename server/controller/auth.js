@@ -1,8 +1,12 @@
 var uuid = require("node-uuid")
 
-module.exports = {Auth: Auth, CreateSession: CreateSession}
+module.exports = {
+  Authenticate: Authenticate,
+  Authorize: Authorize,
+  CreateSession: CreateSession,
+}
 
-function Auth(req, res, next) {
+function Authenticate(req, res, next) {
   console.log("debug: checking auth")
   if (!req.user) {
     LoadSession(req)
@@ -13,6 +17,16 @@ function Auth(req, res, next) {
   }
   next()
 };
+
+function Authorize(req, res, next) {
+  var username = req.body.username
+  // assume can't change username
+  if (req.user.username !== username) {
+    res.status(403).send({error: "You shall not pass!"})
+    return
+  }
+  next()
+}
 
 // don't like the contract here, but whatever..
 function CreateSession(req, user) {

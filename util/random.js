@@ -2,6 +2,7 @@ module.exports = {
   createRandomUser: createRandomUser
 }
 
+// createRandomUser creates a random user, primarily used for testing purposes
 function createRandomUser() {
   var name = "random_user" + Math.round((Math.random() * 1000))
   var pass = "random_pass" + Math.round((Math.random() * 1000))

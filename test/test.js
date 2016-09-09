@@ -16,7 +16,6 @@ describe("Login", function (done) {
       .post("/login")
       .send(user)
       .expect(200)
-      //.expect("set-cookie", "whatever")
       .end(function (err, res) {
         if (err) {
           return done(err)
@@ -29,11 +28,9 @@ describe("Login", function (done) {
 describe("Signup", function () {
 
   it("Should handle '/signup'", function (done) {
-    // shitty tests
     var user = util.createRandomUser()
     request(app)
       .post("/signup")
-      // send data
       .send(user)
       .expect(200)
       .end(function (err, res) {
@@ -58,6 +55,7 @@ describe("Auth", function () {
         done()
       })
   })
+  
   it("Should accept users with valid sessions", function (done) {
     var user = {username: "test_user", password: "test_pass"}
     request(app)
