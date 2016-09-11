@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export HOST="172.17.0.1"
+#export HOST="localhost"
 
 #APP
 export PORT="80"

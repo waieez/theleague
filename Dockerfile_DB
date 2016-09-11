@@ -1,0 +1,4 @@
+from rethinkdb:2.3.5
+
+COPY ./rethinkdb_data /data/rethinkdb_data
+

@@ -43,7 +43,7 @@ function createUser(username, password, profile, cb) {
     }
     getUser(username, function (err, result) {
       if (err) {
-        console.log("warn: failed getting users from DB")
+        console.log("warn: failed getting users from DB", err)
         cb(err)
         return
       }
